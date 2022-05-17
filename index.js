@@ -1,7 +1,6 @@
 const express = require('express');
-const { graphqlHTTP } = require('express-graphql');
-
 const { graphql, buildSchema } = require('graphql');
+const { graphqlHTTP } = require('express-graphql');
 
 const schema = buildSchema(`
     type Query {
@@ -24,7 +23,7 @@ const schema = buildSchema(`
     }
 `);
 
-var allPersons = [
+const allPersons = [
     {
         name: "someone"
     },
@@ -32,8 +31,7 @@ var allPersons = [
         name: "anotherone"
     }
 ]
-
-var allJobs = [
+const allJobs = [
     {
         description: "Banana collector",
         employee: {
@@ -50,7 +48,7 @@ var allJobs = [
     }
 ]
 
-const root = {
+const graphRoot = {
     persons: () => (allPersons),
     jobs: () => (allJobs)
 };
@@ -61,7 +59,7 @@ app.use(
   '/graphql',
   graphqlHTTP({
     schema,
-    rootValue: root,
+    rootValue: graphRoot,
     graphiql: true,
   }),
 );
