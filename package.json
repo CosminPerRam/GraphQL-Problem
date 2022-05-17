@@ -1,0 +1,27 @@
+{
+  "name": "graphql-problem",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CosminPerRam/GraphQL-Problem.git"
+  },
+  "author": "CosminPerRam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CosminPerRam/GraphQL-Problem/issues"
+  },
+  "homepage": "https://github.com/CosminPerRam/GraphQL-Problem#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  },
+  "dependencies": {
+    "express": "^4.18.1",
+    "express-graphql": "^0.12.0",
+    "graphql": "^16.5.0"
+  }
+}
