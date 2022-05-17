@@ -1,6 +1,22 @@
 const express = require('express');
 const { graphql, buildSchema } = require('graphql');
 const { graphqlHTTP } = require('express-graphql');
+const { Sequelize } = require('sequelize');
+const credentials = require('./credentials.json');
+
+var sequelize = new Sequelize(credentials.db_name, credentials.username, credentials.password, {
+    host: credentials.host,
+    dialect: 'mariadb'
+})
+
+sequelize.authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+    process.exit(1);
+  });
 
 const schema = buildSchema(`
     type Query {
