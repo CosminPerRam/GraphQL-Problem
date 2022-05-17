@@ -11,7 +11,7 @@ Mmmm, graphql tasty.
 
 ## Query
 - Jobs:  
-![Jobs](images\query_jobs.png)  
+![](images/query_jobs.png)  
   
 - Persons:  
-![Persons](images\query_persons.png)
+![](images/query_persons.png)
