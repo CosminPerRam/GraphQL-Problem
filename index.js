@@ -4,12 +4,56 @@ const { graphqlHTTP } = require('express-graphql');
 const { graphql, buildSchema } = require('graphql');
 
 const schema = buildSchema(`
-    query {
-        hello: String
+    type Query {
+        persons: [Person]
+        jobs: [Job]
+    }
+
+    type Person {
+        name: String
+    }
+
+    type Job {
+        description: String
+        employee: Employee
+        employer: String
+    }
+
+    type Employee {
+        name: String
     }
 `);
 
-const root = { hello: () => 'Hello world!' };
+var allPersons = [
+    {
+        name: "someone"
+    },
+    {
+        name: "anotherone"
+    }
+]
+
+var allJobs = [
+    {
+        description: "Banana collector",
+        employee: {
+            name: "Cosmin"
+        },
+        employer: "Bezos"
+    },
+    {
+        description: "Discord admin",
+        employee: {
+            name: "Lucian"
+        },
+        employer: "Reddit moderator"
+    }
+]
+
+const root = {
+    persons: () => (allPersons),
+    jobs: () => (allJobs)
+};
 
 const app = express();
 
