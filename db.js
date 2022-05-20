@@ -4,7 +4,7 @@ const credentials = require('./credentials.json');
 
 var sequelize = new Sequelize(credentials.db_name, credentials.username, credentials.password, {
     host: credentials.host,
-    dialect: 'mariadb'
+    dialect: credentials.dialect
 })
 
 //sync the db, `alter:true` is for reapplying the required specifications
