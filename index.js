@@ -1,15 +1,16 @@
 const express = require('express');
-const {GraphQLObjectType, GraphQLList, GraphQLInt, GraphQLInputObjectType, GraphQLString, GraphQLSchema, GraphQLNonNull} = require('graphql');
 const { graphqlHTTP } = require('express-graphql');
 const { Sequelize } = require('sequelize');
-const credentials = require('./credentials.json');
 const { resolver } = require('graphql-sequelize');
+const credentials = require('./credentials.json');
+const {GraphQLObjectType, GraphQLList, GraphQLInt, GraphQLInputObjectType, GraphQLString, GraphQLSchema, GraphQLNonNull} = require('graphql');
 
 var sequelize = new Sequelize(credentials.db_name, credentials.username, credentials.password, {
     host: credentials.host,
     dialect: 'mariadb'
 })
 
+//define our models
 let Person = sequelize.define('person', {
     name: Sequelize.STRING
 });
@@ -25,7 +26,7 @@ let Job = sequelize.define('job', {
 
 Job.Employee = Job.hasOne(Employee, {as:"employee"});
 
-sequelize.sync({alter: true})
+sequelize.sync({alter: true}) //sync the db, `alter:true` is for reapplying the required specifications
     .then(() => {
         console.log('Connection has been established successfully.');
     })
@@ -34,6 +35,7 @@ sequelize.sync({alter: true})
         process.exit(1);
     });
 
+//our graphql objects
 let personType = new GraphQLObjectType({
     name: `Person`,
     description: 'A Person',
