@@ -1,6 +1,7 @@
 
 # GraphQL-Problem
 Mmmm, graphql tasty.
+
 ## Setup
 0) Clone this repo
 1) Install `MariaDB`
@@ -8,12 +9,20 @@ Mmmm, graphql tasty.
 3) Run `npm install`  
 4) Run `npm start`
 5) Open a browser and go to `localhost:4000/graphql`
-6) Run the appropiate queries
+6) Run the appropiate queries/mutations
 7) Profit???
 
-## Query
+## GraphQL
+### Querys:
 - Jobs:  
 ![](images/query_jobs.png)  
   
 - Persons:  
 ![](images/query_persons.png)
+
+### Mutations:
+- createJob:  
+![](images/mutation_job.png)  
+  
+- createPerson:  
+![](images/mutation_person.png)  

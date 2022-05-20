@@ -1,6 +1,5 @@
 const express = require('express');
-const { graphql, buildSchema } = require('graphql');
-const {GraphQLObjectType, GraphQLList, GraphQLInt, GraphQLID, GraphQLInputObjectType, GraphQLString, GraphQLSchema, GraphQLNonNull} = require('graphql');
+const {GraphQLObjectType, GraphQLList, GraphQLInt, GraphQLInputObjectType, GraphQLString, GraphQLSchema, GraphQLNonNull} = require('graphql');
 const { graphqlHTTP } = require('express-graphql');
 const { Sequelize } = require('sequelize');
 const credentials = require('./credentials.json');
