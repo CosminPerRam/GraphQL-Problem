@@ -11,21 +11,12 @@ var sequelize = new Sequelize(credentials.db_name, credentials.username, credent
     dialect: 'mariadb'
 })
 
-sequelize.authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-    process.exit(1);
-  });
-
 let Person = sequelize.define('person', {
     name: Sequelize.STRING
 });
 
 let Employee = sequelize.define('employee', {
-    name: Sequelize.STRING
+    name: Sequelize.STRING,
 });
 
 let Job = sequelize.define('job', {
@@ -33,7 +24,16 @@ let Job = sequelize.define('job', {
     employer: Sequelize.STRING
 });
 
-Job.Employee = Job.hasOne(Employee, {as: 'employee'});
+Job.Employee = Job.hasOne(Employee, {as:"employee"});
+
+sequelize.sync({alter: true})
+    .then(() => {
+        console.log('Connection has been established successfully.');
+    })
+    .catch(err => {
+        console.error('Unable to connect to the database:', err);
+        process.exit(1);
+    });
 
 let personType = new GraphQLObjectType({
     name: `Person`,
@@ -93,6 +93,7 @@ let jobType = new GraphQLObjectType({
         },
         employee: {
             type: new GraphQLNonNull(employeeType),
+            description: 'The employee.',
             resolve: resolver(Job.Employee)
         }
     }
@@ -100,7 +101,7 @@ let jobType = new GraphQLObjectType({
 
 let schema = new GraphQLSchema({
     query: new GraphQLObjectType({
-      name: 'root',
+      name: 'querys',
       fields: {
         jobs: {
             type: new GraphQLList(jobType),
@@ -113,7 +114,7 @@ let schema = new GraphQLSchema({
       }
     }),
     mutation: new GraphQLObjectType({
-        name: 'createJob',
+        name: 'mutations',
         fields: {
             createJob: {
                 type: jobType,
@@ -122,10 +123,25 @@ let schema = new GraphQLSchema({
                     description: { type: new GraphQLNonNull(GraphQLString) },
                     employee: { type: new GraphQLNonNull(employeeInput) }
                 },
-                resolve: (root, job, info) => {
-                    console.log(job.employee);
-                    Employee.create(job.employee);
-                    return Job.create(job);
+                resolve: (_, args) => {
+                    return Job.create({
+                        description: args.description,
+                        employer: args.employer,
+                        employee: args.employee
+                    }, {
+                        include: [{
+                            association: Job.Employee
+                        }]
+                    });
+                }
+            },
+            createPerson: {
+                type: personType,
+                args: {
+                    name: { type: new GraphQLNonNull(GraphQLString) }
+                },
+                resolve: (_, args) => {
+                    return Person.create(args);
                 }
             }
         }
