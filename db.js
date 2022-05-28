@@ -1,10 +1,9 @@
 
 const { Sequelize } = require('sequelize');
-const credentials = require('./credentials.json');
 
-var sequelize = new Sequelize(credentials.db_name, credentials.username, credentials.password, {
-    host: credentials.host,
-    dialect: credentials.dialect
+var sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
+    host: process.env.DB_HOST,
+    dialect: process.env.DB_DIALECT
 })
 
 //sync the db, `alter:true` is for reapplying the required specifications

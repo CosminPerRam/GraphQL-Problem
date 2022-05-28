@@ -1,3 +1,6 @@
+
+require('dotenv').config({path: __dirname + '/.env'})
+
 const express = require('express');
 const { graphqlHTTP } = require('express-graphql');
 const { resolver } = require('graphql-sequelize');
@@ -13,4 +16,4 @@ app.use('/graphql',
   }),
 );
 
-app.listen(4000);
+app.listen(process.env.APP_PORT);
