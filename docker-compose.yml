@@ -5,10 +5,10 @@ services:
     image: mariadb
     restart: always
     environment:
-      MARIADB_USER: user
-      MARIADB_PASSWORD: pass
-      MARIADB_ROOT_PASSWORD: root
-      MARIADB_DATABASE: graphql_data
+      MARIADB_USER: ${DB_USERNAME}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_RANDOM_ROOT_PASSWORD: yeah
+      MARIADB_DATABASE: ${DB_NAME}
     networks:
       - docker-service
   
@@ -20,7 +20,7 @@ services:
     stdin_open: true
     tty: true
     ports: 
-      - '4000:4000'
+      - '${APP_PORT}:${APP_PORT}'
     networks:
       - docker-service
 
