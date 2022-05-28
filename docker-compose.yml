@@ -1,0 +1,31 @@
+version: '3.8'
+
+services: 
+  mariadb:
+    image: mariadb
+    restart: always
+    environment:
+      MARIADB_USER: user
+      MARIADB_PASSWORD: pass
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: graphql_data
+    networks:
+      - docker-service
+  
+  app:
+    depends_on:
+      - mariadb
+    build: ./
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    ports: 
+      - '4000:4000'
+    networks:
+      - docker-service
+
+networks:
+  docker-service:
+
+volumes:
+  db:
