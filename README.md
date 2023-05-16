@@ -1,3 +1,4 @@
+This project was a small 'test' for my Nerds.SH internship.
 
 # GraphQL-Problem
 Mmmm, graphql tasty.
